@@ -75,7 +75,6 @@ class AdsController extends AppController
                 $this->Flash->error(__('The ad could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Ads->Users->find('list', ['limit' => 200]);
         $typeAds = $this->Ads->TypeAds->find('list', ['valueField'=> 'type_name']);
         $towns = $this->Ads->Towns->find('list',['valueField'=> 'town_name']);
         $this->set(compact('ad', 'users', 'typeAds', 'towns'));
@@ -95,6 +94,10 @@ class AdsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            if(!empty($this->request->data['picture']['name'])) {
+                $picture = $this->Upload->getPicture($this->request->data['picture'], 'ad', $ad->id);
+                $this->request->data['picture_url'] = $picture;
+            }
             $ad = $this->Ads->patchEntity($ad, $this->request->data);
             if ($this->Ads->save($ad)) {
                 $this->Flash->success(__('The ad has been saved.'));

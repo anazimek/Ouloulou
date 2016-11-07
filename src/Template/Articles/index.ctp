@@ -57,23 +57,13 @@
                     </div>
                     <br>
                     <div class="text-center">
-                        <?php
-                        if (!is_null($this->request->session()->read('Auth.User.username'))) {
-                            echo $this->Html->link(__('Voir mon Profil'), ['controller' => 'Users', 'action' => 'view',$this->request->session()->read('Auth.User.id')]);
-                            ?>
+                            <?= $this->Html->link(__('Voir mon Profil'), ['controller' => 'Users', 'action' => 'view', $this->request->session()->read('Auth.User.id')],[ 'class' => 'btn btn-success']); ?>
                             <br>
-                            <?php
-                            echo $this->Html->link(__('Déconnexion'), ['controller' => 'Intranet', 'action' => 'logout']);
-                            ?>
+                            <?= $this->Html->link(__('Déconnexion'), ['controller' => 'Intranet', 'action' => 'logout'],[ 'class' => 'btn btn-info']); ?>
                             <br>
-                            <?php
-                            echo $this->Html->link(__('Editer mon Profil'), ['controller' => 'Users', 'action' => 'edit',$this->request->session()->read('Auth.User.id')]);
-                            ?>
+                            <?= $this->Html->link(__('Editer mon Profil'), ['controller' => 'Users', 'action' => 'edit', $this->request->session()->read('Auth.User.id')],[ 'class' => 'btn btn-warning']); ?>
                             <br>
-                            <?php
-                            echo $this->Html->link(__('Supprimer mon Profil'), ['controller' => 'Users', 'action' => 'delete',$this->request->session()->read('Auth.User.id')]);
-                        }
-                        ?>
+                            <?= $this->Html->link(__('Supprimer mon Profil'), ['controller' => 'Users', 'action' => 'delete', $this->request->session()->read('Auth.User.id')],[ 'class' => 'btn btn-danger']); ?>
                     </div>
                     <br>
                 </div>
@@ -88,7 +78,7 @@
 
                         <a class="btn btn-info btn-xs"
                            href="#">
-                            <i class="glyphicon glyphicon-search"></i> Boutiques</a>
+                            <i class="glyphicon glyphicon-search "></i> Boutiques</a>
                     </div>
                     <br>
                 </div>
@@ -108,20 +98,26 @@
 
                                 <?= $this->Html->image($articles->user->profil_picture, ['width' => '50px', 'height' => '50px', 'style' => 'border-radius:30%']); ?>
 
-                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'view', $articles->user_id]) ?>"
-                                   style="display: inline-block; font-weight: 600; font-size: 17px; color: black"><?= h($articles->user->last_name) ?><?= h($articles->user->first_name) ?></a>
+                                <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'view', $articles->user_id]) ?>"
+                                   style="display: inline-block; font-weight: 600; font-size: 17px; color: black"><?= h($articles->user->last_name) ?> <?= h($articles->user->first_name) ?></a>
 
                                 <p class="text-center"
                                    style="color: black; font-weight: 900"><?= h($articles->description) ?></p>
                                 <p class="text-center"
                                    style="color: black; font-weight: 900"><?= h($articles->image) ?></p>
-                                <p class="text-center"
-                                   style="color: black; font-weight: 900"><?= h($articles->video_link) ?></p>
+                                <?php if ($articles->video_link != NULL) {?>
+                                <p class="text-center">
+                                    <iframe width="420" height="250" frameborder="0"
+                                            src="<?= h($articles->video_link) ?>">
+                                    </iframe>
+                                </p>
+                                <?php }?>
+
                                 <a class="btn btn-info"
                                    href="<?= $this->Url->build(['controller' => 'Articles', 'action' => 'view', $articles->id]) ?>">
                                     <i class="glyphicon glyphicon-search"></i> Voir le Post</a>
                                 <a class="btn btn-info"
-                                   href="<?= $this->Url->build(['controller' => 'Comments', 'action' => 'add']) ?>">
+                                   href="<?= $this->Url->build(['controller' => 'Comments', 'action' => 'add',$articles->id]) ?>">
                                     <i class="glyphicon glyphicon-pencil"></i> Nouveau Commentaire</a>
                                 <a href="#" class="glyphicon glyphicon-ok" style="margin-left: 10%"></a>
                                 <a href="#" class="glyphicon glyphicon-remove" style="margin-left: 10%"></a>
@@ -135,7 +131,8 @@
             <div class="annonces">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="text-center"><i class="glyphicon glyphicon-file"></i> <?= __('Dernières Annonces') ?></h4>
+                        <h4 class="text-center"><i class="glyphicon glyphicon-file"></i> <?= __('Dernières Annonces') ?>
+                        </h4>
                         <a class="btn btn-info btn-xs" style="margin-left: 4%"
                            href="<?= $this->Url->build(['controller' => 'Ads', 'action' => 'add']) ?>">
                             <i class="glyphicon glyphicon-plus"></i> Nouvelle annonce</a>
@@ -182,7 +179,7 @@
                             <div class="col-md-10 col-lg-offset-1 ">
                                 <div class="text-center well well-sm"
                                      style="display: inline-block; margin-left: 10%; margin-right: 1%; border: 1px solid gainsboro; width: 80%">
-                                    <?= $this->Html->image('ad/'.$ads->picture_url, ['width' => '50px', 'height' => '50px', 'style' => 'border-radius:30%']); ?>
+                                    <?= $this->Html->image('ad/' . $ads->picture_url, ['width' => '50px', 'height' => '50px', 'style' => 'border-radius:30%']); ?>
                                     <h5><?= h($ads->ads_name) ?></h5>
                                     <p style="font-weight: 300">Type d'Offre: <?= h($typeads) ?></p>
                                     <p style="font-weight: 300">Prix: <?= h($ads->price) ?>€</p>

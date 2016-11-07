@@ -68,7 +68,7 @@
                 </div>
                 <br>
                 <div class="form-group" style="display: inline-block;">
-                    <label for="form-create-account-full-name">à Vandre:</label>
+                    <label for="form-create-account-full-name">à Vendre:</label>
                     <?= $this->Form->input('for_sale', ['label' => false]); ?>
                 </div>
                 <br>

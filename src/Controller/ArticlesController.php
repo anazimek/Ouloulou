@@ -37,7 +37,7 @@ class ArticlesController extends AppController
 
 
 
-        $this->set(compact('articles','ads','img'));
+        $this->set(compact('articles','ads'));
         $this->set('_serialize', ['articles']);
     }
 
@@ -50,12 +50,13 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
-        $this->loadModel('users');
         $article = $this->Articles->get($id, [
-            'contain' => ['Users','Comments']
+            'contain' => [
+                'Users'
+                ,'Comments.Users'
+            ]
         ]);
-        $users = $this->users->findAllById($article['user_id'])->toArray();
-        $this->set(compact( 'users'));
+
 
         $this->set('article', $article);
         $this->set('_serialize', ['article']);
@@ -71,6 +72,7 @@ class ArticlesController extends AppController
         $article = $this->Articles->newEntity();
         if ($this->request->is('post')) {
             $this->request->data['user_id'] = $this->Auth->User('id');
+            $this->request->data['video_link'] = 'https://www.youtube.com/embed/'. explode('?v=',$this->request->data['video_link'])[1];
             $article = $this->Articles->patchEntity($article, $this->request->data);
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('Post enregistré.'));
@@ -80,7 +82,6 @@ class ArticlesController extends AppController
                 $this->Flash->error(__('Erreur.'));
             }
         }
-        $users = $this->Articles->Users->find('list', ['valueField'=> 'username']);
         $this->set(compact('article', 'users'));
         $this->set('_serialize', ['article']);
     }

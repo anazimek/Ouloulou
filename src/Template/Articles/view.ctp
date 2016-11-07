@@ -66,13 +66,19 @@
 <div class="container-fluid">
 <div class="row">
 <div  class="col-md-8 col-lg-offset-2 well">
-    <?php foreach ( $users as $user)?>
-    <?= $this->Html->image($user->profil_picture,['width'=>'150px','height'=>'150px','style'=>'border-radius:30%']); ?>
-    <a href="<?=$this->Url->build(['controller' => 'Users', 'action' => 'view',$article->user_id])?>" style="display: inline-block; font-weight: 600; font-size: 40px;  color: black"><?= h($user->last_name)?><?= h($user->first_name)?></a>
+    <?php foreach ( $article->user as $user)?>
+    <?= $this->Html->image($article->user->profil_picture,['width'=>'150px','height'=>'150px','style'=>'border-radius:30%']); ?>
+    <a href="<?=$this->Url->build(['controller' => 'Users', 'action' => 'view',$article->user_id])?>" style="display: inline-block; font-weight: 600; font-size: 40px;  color: black"><?= $article->user->last_name?><?= $article->user->first_name?></a>
     <? endforeach; ?>
     <p class="text-center" style="color: black; font-weight: 900; font-size: 30px"><?= h($article->description) ?></p>
     <p><?= h($article->image) ?></p>
-    <p><?= h($article->video_link) ?></p>
+    <?php if ($article->video_link != NULL) {?>
+        <p class="text-center">
+            <iframe width="500" height="300" frameborder="0"
+                    src="<?= h($article->video_link) ?>">
+            </iframe>
+        </p>
+    <?php }?>
 <br>
     <div class="related">
         <h4><?= __('Commentaires') ?></h4>
@@ -82,10 +88,8 @@
         <?php if (!empty($article->comments)): ?>
             <?php foreach ($article->comments as $comments): ?>
                 <div class="well">
-                    <?php foreach ( $users as $user)?>
-                    <?= $this->Html->image($user->profil_picture,['width'=>'50px','height'=>'50px','style'=>'border-radius:30%']); ?>
-                    <a href="<?=$this->Url->build(['controller' => 'Users', 'action' => 'view',$comments->user_id])?>" style="display: inline-block; font-weight: 600; font-size: 17px; color: black"><?= h($user->last_name)?><?= h($user->first_name)?></a>
-                    <? endforeach; ?>
+                    <?= $this->Html->image($comments->user->profil_picture,['width'=>'50px','height'=>'50px','style'=>'border-radius:30%']); ?>
+                    <a href="<?=$this->Url->build(['controller' => 'Users', 'action' => 'view',$comments->user_id])?>" style="display: inline-block; font-weight: 600; font-size: 17px; color: black"><?= $comments->user->last_name ?><?= $comments->user->first_name ?></a>
                     <p class="text-center" style="color: black; font-weight: 700"><?= h($comments->description) ?></p>
                     <a class="btn btn-info"
                        href="<?= $this->Url->build(['controller' => 'Comments', 'action' => 'edit', $comments->id]) ?>">

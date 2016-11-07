@@ -1,3 +1,6 @@
+
+
+
 <div class="container-fluid" style="background-color: white">
     <header class="navbar" id="top" role="banner">
         <div class="navbar-header">
@@ -54,6 +57,18 @@
 </div><!-- /.container -->
 
 
+<style>
+    img:hover {
+        opacity: 0.2;
+    }
+    img:hover span{
+        display: block;
+    }
+</style>
+
+
+
+
 <body style="background-color:DarkGray">
 <div class="container-fluid">
     <div class="row">
@@ -63,11 +78,10 @@
             </div>
             <?php foreach ($users as $user): ?>
                 <div class="col-md-2 text-center well">
-                    <!--<?= $this->Html->image($user->profil_picture, ['width' => '100px', 'height' => '100px', 'style' => 'border-radius:30%']); ?>-->
-                    <?= $this->Html->image( $user->profil_picture, ['width' => '100px', 'height' => '100px', 'style' => 'border-radius:30%']); ?>
+                    <img src="../img/<?= $user->profil_picture ?>" style="width: 150px;height: 150px;border-radius: 30%;">
                     <h4>
-                        <?= h($user->first_name) ?><br>
-                        <?= h($user->last_name) ?>
+                        <span><?= h($user->first_name) ?><br>
+                        <?= h($user->last_name) ?></span>
                     </h4>
                     <a class="btn btn-info"
                        href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'view', $user->id]) ?>">Voir Profil</a>
