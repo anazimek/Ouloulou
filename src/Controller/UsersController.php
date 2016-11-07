@@ -38,9 +38,8 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        //$this->loadModel('articles');
         $user = $this->Users->get($id, [
-            'contain' => ['Ads','Articles', 'UserImages', 'UserMessages', 'Comments']
+            'contain' => ['Ads','Articles', 'UserImages', 'UserMessages',]
 
         ]);
         if($id==$this->Auth->User('id')) {
@@ -105,7 +104,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         if($id!=$this->Auth->User('id')){
-            return $this->redirect(['controller'=>'Articles', 'action' => 'index']);
+            return $this->redirect(['controller'=>'Articles', 'action' => 'index',]);
         }
         $user = $this->Users->get($id, [
             'contain' => []

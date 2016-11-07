@@ -63,6 +63,8 @@ class AppController extends Controller
                 'action' => 'index'
             ]
         ]);
+
+
     }
 
     public function isAuthorized($user)

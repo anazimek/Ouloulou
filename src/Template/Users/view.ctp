@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid" style="background-color: white">
         <header class="navbar" id="top" role="banner">
@@ -54,7 +62,8 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="well well-lg" style="background-color: #428bca; border-color: #428bca">
-                    <?= $this->Html->image($user->profil_picture, ['width' => '200px', 'height' => '200px', 'style' =>'border-radius:30%']); ?>
+                    <?= $this->Html->image($user->profil_picture, ['width' => '200px', 'height' => '200px', 'style' =>'background-color:white','border-radius:30%']); ?>
+
                 <h1 style="color: white">
                     <?= h($user->first_name) ?><br>
                     <?= h($user->last_name) ?>
@@ -67,7 +76,7 @@
     <div class="row">
         <div class="users view col-md-4 text-center">
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                <div class="panel-heading 1"  >
                     <h4><i class="glyphicon glyphicon-list-alt"></i> <?= __('Infos') ?></h4>
                     <?php
                     if ($autoriser) {
@@ -201,7 +210,7 @@
                             } ?>
                             <div
                                 style="display: inline-block; margin-left: 1%; margin-right: 1%; border: 1px solid gainsboro; width: 45%; border-radius: 3%">
-                                <?= $this->Html->image($ads->id . 'A.jpg', ['width' => '50px', 'height' => '50px', 'style' => 'border-radius:30%']); ?>
+                                <?= $this->Html->image('ad/'.$ads->picture_url, ['width' => '50px', 'height' => '50px', 'style' => 'border-radius:30%']); ?>
                                 <h5><?= h($ads->ads_name) ?></h5>
                                 <p>type d'Offre: <?= h($typeads) ?></p>
                                 <p>Prix: <?= h($ads->price) ?>€</p>
@@ -230,7 +239,13 @@
                                     <p class="text-center"
                                        style="color: black; font-weight: 900"><?= h($articles->description) ?></p>
                                     <p class="text-center"><?= h($articles->image) ?></p>
-                                    <p class="text-center"><?= h($articles->video_link) ?></p>
+                                    <?php if ($articles->video_link != NULL) {?>
+                                        <p class="text-center">
+                                            <iframe width="420" height="250" frameborder="0"
+                                                    src="<?= h($articles->video_link) ?>">
+                                            </iframe>
+                                        </p>
+                                    <?php }?>
                                     <a class="btn btn-info"
                                        href="<?= $this->Url->build(['controller' => 'Articles', 'action' => 'view', $articles->id]) ?>">
                                         <i class="glyphicon glyphicon-search"></i> Voir le Post</a>
@@ -296,3 +311,13 @@
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $(".1").click(function(){
+            $(".panel-body").animate({
+                height: 'toggle'
+            });
+        });
+    });
+</script>

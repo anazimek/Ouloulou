@@ -46,7 +46,7 @@ class CommentsController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id=null)
+    public function add($id = null)
     {
         $comment = $this->Comments->newEntity();
         if ($this->request->is('post')) {
@@ -85,13 +85,21 @@ class CommentsController extends AppController
             'contain' => []
         ]);
 
-        $articles = $this->Comments->Articles->find('list', [
-            'valueField'=> 'description']);
+        $article_id = $this->Comments->find('all', [
+            'fields' => [
+                'id' => 'article_id'
+            ],
+            'conditions'=> [
+                'Comments.id' => $id
+            ]
+        ])->first();
 
         $users = $this->Comments->Users->find('list', [
             'valueField'=> 'username']);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->request->data['article_id'] = $article_id->id;
+            $this->request->data['user_id'] = $this->Auth->User('id');
             $comment = $this->Comments->patchEntity($comment, $this->request->data);
             if ($this->Comments->save($comment)) {
                 $this->Flash->success(__('Le commentaire à bien été modifié.'));

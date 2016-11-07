@@ -77,16 +77,6 @@
                         <legend style="color: white"><?= __('Modifier Commentaire') ?></legend>
                     </div>
                     <div class="form-group" style="display: inline-block;">
-                        <label for="form-create-account-full-name">Article:</label>
-                        <?= $this->Form->input('article_id', ['options' => $articles,'label' => false]); ?>
-                    </div>
-                    <br>
-                    <div class="form-group" style="display: inline-block;">
-                        <label for="form-create-account-full-name">Utilisateur:</label>
-                        <?= $this->Form->input('user_id', ['options' => $users,'label' => false]); ?>
-                    </div>
-                    <br>
-                    <div class="form-group" style="display: inline-block;">
                         <label for="form-create-account-full-name">Description:</label>
                         <?= $this->Form->input('description', ['label' => false]); ?>
                     </div>
